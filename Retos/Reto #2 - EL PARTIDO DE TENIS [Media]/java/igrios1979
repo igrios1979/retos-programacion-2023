@@ -1,0 +1,122 @@
+
+
+import java.util.ArrayList;
+
+
+/*
+ * Escribe un programa que muestre cómo transcurre un juego de tenis y quién lo ha ganado.
+ * El programa recibirá una secuencia formada por "P1" (Player 1) o "P2" (Player 2), según quien
+ * gane cada punto del juego.
+ *
+ * - Las puntuaciones de un juego son "Love" (cero), 15, 30, 40, "Deuce" (empate), ventaja.
+ * - Ante la secuencia [P1, P1, P2, P2, P1, P2, P1, P1], el programa mostraría lo siguiente:
+ *   15 - Love
+ *   30 - Love
+ *   30 - 15
+ *   30 - 30
+ *   40 - 30
+ *   Deuce
+ *   Ventaja P1
+ *   Ha ganado el P1
+ * - Si quieres, puedes controlar errores en la entrada de datos.
+ * - Consulta las reglas del juego si tienes dudas sobre el sistema de puntos.
+ */
+
+
+public class PartidoDeTenis {
+
+    public static void main(String[] args) {
+
+
+        ArrayList<String> secuencia = new ArrayList<>();
+        ArrayList<String> secuenciaRes = new ArrayList<>();
+        secuenciaRes.add("Love");
+        secuenciaRes.add("15");
+        secuenciaRes.add("30");
+        secuenciaRes.add("40");
+        //[P1, P1, P2, P2, P1, P2, P1, P1]
+
+        secuencia.add("P1");
+        secuencia.add("P1");
+        secuencia.add("P1");
+        secuencia.add("P2");
+        secuencia.add("P1");
+        secuencia.add("P2");
+        secuencia.add("P1");
+        secuencia.add("P1");
+
+
+    //    secuencia.add("P2");
+        //      secuencia.add("P2");
+
+        int P1 = 0;
+        int P2 = 0;
+        Boolean finalizo = false;
+        Boolean error = false;
+
+        for (String s : secuencia) {
+                if (finalizo) {
+                    error = true;
+                }
+
+                if (s == "P1") {
+                    P1++;// = P1 + 1;
+                } else {
+                    P2++;
+                } // fi nif calculo de puntos
+
+                if (P1 >= 3 && P2 >= 3) {
+                    if (!finalizo && (Math.abs(P1 - P2) <= 1)) {
+                        if (P1 == P2) {
+                            System.out.println("DEUCE");
+                        } else if (P1 > P2) {
+                            System.out.println("VENTAJA P1");
+                        } else if (P1 < P2) {
+                            System.out.println("VENTAJA P2");
+                        }
+                    } else {
+                        finalizo = true;
+                    }
+                } else {
+                    if (P1 < 4 && P2 < 4) {
+                        System.out.println(secuenciaRes.get(P1) + "-" + secuenciaRes.get(P2));
+                    } else {
+                        finalizo = true;
+                    }
+
+                }
+
+            }
+            if (error || !finalizo) {
+                System.out.println("los puntos no son Correctos");
+            } else if (P1 > P2) {
+                System.out.println("Gano el P1");
+            } else if (P1 < P2) {
+                System.out.println("Gano el P2");
+            }
+
+        } // Fin for
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
