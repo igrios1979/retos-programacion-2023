@@ -1,0 +1,172 @@
+package com.ignacio.rios;
+
+/*
+ * Escribe un programa que sea capaz de generar contraseñas de forma aleatoria.
+ * Podrás configurar generar contraseñas con los siguientes parámetros:
+ * - Longitud: Entre 8 y 16.
+ * - Con o sin letras mayúsculas.
+ * - Con o sin números.
+ * - Con o sin símbolos.
+ * (Pudiendo combinar todos estos parámetros entre ellos)
+ */
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Contraseñas extends JFrame implements ActionListener {
+    public static     JRadioButton radioButton1;
+    public static     JRadioButton radioButton2;
+    public static     JRadioButton radioButton3;
+    public static     JRadioButton radioButton4;
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+
+        frame.setTitle("Contraseñas");
+        frame.setSize(400,300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container cp = frame.getContentPane();
+        GridLayout gl = new GridLayout(4,1);
+       // BorderLayout gl = new BorderLayout();
+        gl.setHgap(2); gl.setVgap(2);
+        cp.setLayout(gl);
+
+
+        JPanel panelRadio = new JPanel();
+        panelRadio.setLayout(new GridLayout(1,4,0,2));
+        radioButton1 = new JRadioButton("minusculas");
+        radioButton2 = new JRadioButton("mayusculas");
+        radioButton3 = new JRadioButton("numeros");
+        radioButton4 = new JRadioButton("simbolos");
+
+        panelRadio.add(radioButton1);
+        panelRadio.add(radioButton2);
+        panelRadio.add(radioButton3);
+        panelRadio.add(radioButton4);
+
+        frame.add(panelRadio);
+
+        JPanel PanelEtiqueta = new JPanel();
+        PanelEtiqueta.setLayout(new FlowLayout());
+        TextField etiqueta  = new TextField(20);
+        Font font1 = new Font("SansSerif", Font.BOLD, 20);
+        etiqueta.setFont(font1);
+        etiqueta.setBackground(Color.red);
+        etiqueta.setForeground(Color.WHITE);
+        etiqueta.setSize(150,20);
+        PanelEtiqueta.add(etiqueta, BorderLayout.SOUTH);
+        frame.add(PanelEtiqueta);
+
+        frame.setVisible(true);
+
+
+        radioButton1.addActionListener(e -> {
+            if(radioButton1.isSelected()) {
+                etiqueta.setText(generador(false, false, false));
+            }else{
+                radioButton2.setSelected(false);
+                radioButton3.setSelected(false);
+                radioButton4.setSelected(false);
+            }
+            //System.out.println(" " + generador(10,false,false,false));
+
+        });
+
+        radioButton2.addActionListener(e -> {
+            etiqueta.setText(generador(true,false,false));
+            //System.out.println(" " + generador(10,true,false,false));
+        });
+
+        radioButton3.addActionListener(e -> {
+            etiqueta.setText(generador(true,true,false));
+            // System.out.println(" " + generador(10,true,true,false));
+        });
+
+        radioButton4.addActionListener(e -> {
+            etiqueta.setText(generador(true,true,true));
+           // System.out.println(" " + generador(10,true,true,true));
+        });
+
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+
+    }
+
+
+
+ private static String generador(boolean mayusculas, boolean numeros, boolean simbolos){
+       int largo_final = 0;
+
+        if(10 < 8){
+            largo_final = 8;
+        }else if (10 < 16){
+            largo_final = 10;
+        }else {
+            largo_final = 16;
+        }
+
+     //noinspection rawtypes
+     ArrayList minusculas = new ArrayList();
+     int a = 0;
+     String password =" ";
+
+     for ( int i = 97 ;i <123 ; i++){ //a-z
+
+         char caracter = (char) i;
+         //noinspection unused
+         String cadena = Character.toString(caracter);
+         minusculas.add(caracter);
+         //   System.out.println("caracter = " + cadena +" " + i);
+     }
+     if (mayusculas) {
+         for (int i = 65; i < 91; i++) { //a-z
+             char caracter = (char) i;
+             //noinspection unused
+             String cadena = Character.toString(caracter);
+             minusculas.add(caracter);
+         }
+     }
+     if(numeros){
+         for (int i = 49; i < 58; i++) { //a-z
+             char caracter = (char) i;
+             //noinspection unused
+             String cadena = Character.toString(caracter);
+             minusculas.add(caracter);
+         }
+     }
+     if(simbolos){
+         for (int i = 33; i < 48; i++) { //a-z
+             char caracter = (char) i;
+             //noinspection unused
+             String cadena = Character.toString(caracter);
+             minusculas.add(caracter);
+         }
+     }
+
+     while(  a   < largo_final){
+         //  System.out.println("minusculas = " + minusculas.get(a));
+        
+         Random r = new Random();
+         int r_dos = r.nextInt(minusculas.size());
+         password +=  minusculas.get(r_dos);
+         //System.out.print(password);
+         a++;
+         
+     }
+     return password;
+
+ }// Fin metodo generar
+
+
+
+}// fin clase
